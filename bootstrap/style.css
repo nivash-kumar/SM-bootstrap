@@ -1,4 +1,4 @@
-/* THIS IS YOUR ORIGINAL, UNTOUCHED CSS BLOCK */
+//bootstap css
 body {
     font-family: 'Inter', sans-serif;
     background-color: #0A192F;
@@ -7,89 +7,143 @@ body {
     /* Rocket White */
 }
 
-.bg-deep-space-blue {
-    background-color: #0A192F;
+:root {
+    --deep-space-blue: #0A192F;
+    --rocket-white: #FFFFFF;
+    --muted-white: #adb5bd;
+    --saffron-thruster: #F59E0B;
+    --galaxy-green: #10B981;
+    --starlight-yellow: #FBBF24;
+    --cosmic-red: #EF4444;
 }
 
-.bg-rocket-white {
-    background-color: #F0F2F5;
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--deep-space-blue);
+    color: var(--rocket-white);
 }
 
-.text-rocket-white {
-    color: #F0F2F5;
+.header-custom {
+    background-color: rgba(10, 25, 47, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
-.text-deep-space-blue {
-    color: #0A192F;
+.custom-select {
+    background-color: var(--deep-space-blue);
+    color: var(--rocket-white);
+    border: 2px solid #4b5563;
 }
 
-.text-muted-white {
-    color: #A8B2D1;
+.custom-select:focus {
+    background-color: var(--deep-space-blue);
+    color: var(--rocket-white);
+    border-color: var(--saffron-thruster);
+    box-shadow: 0 0 0 0.25rem rgba(245, 158, 11, 0.25);
 }
 
-.bg-saffron-thruster {
-    background-color: #FF9933;
-}
-
-.bg-saffron-thruster-20 {
-    background-color: #ff993320;
-}
-
-.text-saffron-thruster {
-    color: #FF9933;
+.hover-text-saffron-thruster {
+    color: var(--rocket-white);
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
 .hover-text-saffron-thruster:hover {
-    color: #FF9933;
+    color: var(--saffron-thruster);
 }
 
-.bg-galaxy-green {
-    background-color: #2E8B57;
+.filter-btn {
+    color: var(--muted-white);
+    border-color: #4b5563;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.bg-cosmic-red {
-    background-color: #D93025;
+.filter-btn:hover {
+    background-color: #374151;
+    color: var(--rocket-white);
+    border-color: #4b5563;
 }
 
-.bg-starlight-yellow {
-    background-color: #FBCB0A;
+.filter-btn.active {
+    background-color: #4b5563;
+    color: var(--rocket-white);
+    border-color: #4b5563;
 }
 
-/* Custom select styles */
-.custom-select {
-    background-color: #1E293B;
-    border-color: #334155;
-    color: #F0F2F5;
+.card {
+    border: none;
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Active filter button style */
-.filter-btn-active {
-    background-color: #FF9933 !important;
-    color: #0A192F !important;
-    border-color: #FF9933 !important;
+.card:hover {
+    transform: translateY(-8px);
 }
 
-/* Modal styles */
-.modal-overlay {
-    transition: opacity 0.3s ease;
+.card-img-custom {
+    height: 192px;
+    object-fit: cover;
 }
 
-.modal-content {
-    transition: transform 0.3s ease;
+.card-body .card-title {
+    color: var(--deep-space-blue);
 }
 
-/* Simple spinner for loading state */
-.spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: #FF9933;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+.card-body .card-text,
+.card-body .mission-detail {
+    color: #495057;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+.btn-outline-saffron {
+    --bs-btn-color: var(--saffron-thruster);
+    --bs-btn-border-color: var(--saffron-thruster);
+    --bs-btn-hover-color: var(--rocket-white);
+    --bs-btn-hover-bg: var(--saffron-thruster);
+    --bs-btn-hover-border-color: var(--saffron-thruster);
+    --bs-btn-active-color: var(--rocket-white);
+    --bs-btn-active-bg: var(--saffron-thruster);
+    --bs-btn-active-border-color: var(--saffron-thruster);
+}
+
+.footer-custom {
+    border-top: 1px solid rgba(17, 24, 39, 0.5);
+}
+
+.footer-custom a {
+    color: var(--muted-white);
+    text-decoration: none;
+}
+
+.footer-custom a:hover {
+    color: var(--saffron-thruster);
+}
+
+.modal-content-custom {
+    background-color: var(--deep-space-blue);
+    border: 1px solid #1e293b;
+}
+
+.modal-header {
+    border-bottom: 1px solid #1e293b;
+}
+
+.modal-footer {
+    border-top: 1px solid #1e293b;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.prose {
+    line-height: 1.6;
+}
+
+.prose strong {
+    color: var(--rocket-white);
+}
+
+.spinner-border-light {
+    color: var(--rocket-white);
 }
