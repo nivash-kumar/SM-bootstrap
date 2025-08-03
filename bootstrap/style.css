@@ -1,0 +1,95 @@
+/* THIS IS YOUR ORIGINAL, UNTOUCHED CSS BLOCK */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0A192F;
+    /* Deep Space Blue */
+    color: #F0F2F5;
+    /* Rocket White */
+}
+
+.bg-deep-space-blue {
+    background-color: #0A192F;
+}
+
+.bg-rocket-white {
+    background-color: #F0F2F5;
+}
+
+.text-rocket-white {
+    color: #F0F2F5;
+}
+
+.text-deep-space-blue {
+    color: #0A192F;
+}
+
+.text-muted-white {
+    color: #A8B2D1;
+}
+
+.bg-saffron-thruster {
+    background-color: #FF9933;
+}
+
+.bg-saffron-thruster-20 {
+    background-color: #ff993320;
+}
+
+.text-saffron-thruster {
+    color: #FF9933;
+}
+
+.hover-text-saffron-thruster:hover {
+    color: #FF9933;
+}
+
+.bg-galaxy-green {
+    background-color: #2E8B57;
+}
+
+.bg-cosmic-red {
+    background-color: #D93025;
+}
+
+.bg-starlight-yellow {
+    background-color: #FBCB0A;
+}
+
+/* Custom select styles */
+.custom-select {
+    background-color: #1E293B;
+    border-color: #334155;
+    color: #F0F2F5;
+}
+
+/* Active filter button style */
+.filter-btn-active {
+    background-color: #FF9933 !important;
+    color: #0A192F !important;
+    border-color: #FF9933 !important;
+}
+
+/* Modal styles */
+.modal-overlay {
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    transition: transform 0.3s ease;
+}
+
+/* Simple spinner for loading state */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #FF9933;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

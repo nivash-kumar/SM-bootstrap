@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agency Mission Tracker - Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-deep-space-blue container">
+
+    <header class="bg-deep-space-blue h-10">
+        <nav class="navbar d-flex flex-row justify-content-between align-content-center">
+            <div class=" d-flex flex-row justify-content-between align-content-center">
+                <img src="../../assets/logo.png" alt="logo image">
+                <h1 class="text-rocket-white ">Mission Tracker</h1>
+            </div>
+            <div class="d-flex flex-row justify-content-between align-content-center ">
+                <select id="agency-select" class="custom-select">
+                    <option value="ISRO">ISRO</option>
+                    <option value="NASA">NASA</option>
+                    <option value="SpaceX">SpaceX</option>
+                </select>
+                <div class="d-none d-md-block ">
+                    <a href="#" class="hover-text-saffron-thruster">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 id="main-title" class="text-rocket-white text-center">ISRO Missions</h2>
+
+        <div id="filter-container" class="d-flex justify-content-center "></div>
+
+        <div id="mission-grid">
+            </div>
+    </main>
+
+    <footer class="bg-deep-space-blue">
+        <div>
+            <div>
+                <h4 class="text-rocket-white">
+                    Multi-Agency Mission Tracker
+                </h4>
+                <p class="text-muted-white">Tracking Humanity's Journey to the Stars.</p>
+            </div>
+            <div>
+                <h5 class="text-rocket-white">Important Links</h5>
+                <ul>
+                    <li><a href="#" class="text-muted-white hover-text-saffron-thruster">Home</a></li>
+                    <li><a href="#" class="text-muted-white hover-text-saffron-thruster">About</a></li>
+                    <li><a href="#" class="text-muted-white hover-text-saffron-thruster">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-rocket-white">Follow Me&gt;</h5>
+                <div>
+                    <a href="#" class="text-muted-white hover-text-saffron-thruster">
+                        <img src="../../assets/xitem.svg" alt="x.com">
+                    </a>
+                    <a href="#" class="text-muted-white hover-text-saffron-thruster">
+                        <img src="../../assets/youtube.svg" alt="youtube.com">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-muted-white">© 2024 Mission Tracker.
+            A fan-made project.</div>
+    </footer>
+
+    <div id="facts-page" class="modal-overlay">
+        <div class="modal-content bg-deep-space-blue">
+            <div>
+                <h3 id="modal-title" class="text-rocket-white">Mission Insights</h3>
+                <button id="modal-close-button" class="text-muted-white">×</button>
+            </div>
+            <div id="modal-body" class="text-muted-white">
+                <div id="modal-loader">
+                    <div class="spinner"></div>
+                </div>
+                <div id="modal-response-content"></div>
+            </div>
+            <div id="modal-footer">
+                <button id="explain-tech-button" class="bg-saffron-thruster-20 text-saffron-thruster">✨ Explain the Tech
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- DATA STORE ---
+        const missionData = {
+            "ISRO": [
+                { name: "Chandrayaan-3", type: "Lunar", description: "India's third lunar exploration mission.", launchDate: "14 July 2023", vehicle: "LVM3 M4", orbit: "Lunar", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Chandrayaan-3" },
+                { name: "Mangalyaan (MOM)", type: "Planetary", description: "India's first interplanetary mission to Mars.", launchDate: "5 November 2013", vehicle: "PSLV-XL C25", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Mangalyaan" },
+                { name: "Aditya-L1", type: "Solar", description: "India's first solar observatory mission.", launchDate: "2 September 2023", vehicle: "PSLV-XL", orbit: "Halo (L1)", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Aditya-L1" },
+                { name: "Gaganyaan", type: "Human Spaceflight", description: "India's first human spaceflight mission.", launchDate: "Est. 2025", vehicle: "LVM3", orbit: "Low Earth", status: "Upcoming", statusColor: "bg-starlight-yellow", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Gaganyaan" }
+            ],
+            "NASA": [
+                { name: "Artemis I", type: "Lunar", description: "Uncrewed test flight of the SLS rocket and Orion spacecraft.", launchDate: "16 November 2022", vehicle: "Space Launch System", orbit: "Lunar", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Artemis+I" },
+                { name: "James Webb Telescope", type: "Observatory", description: "Large infrared space telescope.", launchDate: "25 December 2021", vehicle: "Ariane 5", orbit: "Halo (L2)", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=JWST" },
+                { name: "Perseverance Rover", type: "Planetary", description: "Mars rover exploring Jezero crater.", launchDate: "30 July 2020", vehicle: "Atlas V 541", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Perseverance" }
+            ],
+            "SpaceX": [
+                { name: "Starlink Group 6-2", type: "Satellite", description: "Part of the Starlink satellite internet constellation.", launchDate: "27 September 2023", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starlink" },
+                { name: "Inspiration4", type: "Human Spaceflight", description: "First all-civilian orbital spaceflight.", launchDate: "16 September 2021", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "bg-galaxy-green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Inspiration4" },
+                { name: "Starship Flight Test", type: "Test Flight", description: "Second integrated flight test of Starship.", launchDate: "18 November 2023", vehicle: "Starship", orbit: "Suborbital", status: "Partial Failure", statusColor: "bg-cosmic-red", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starship" }
+            ]
+        };
+
+        let currentAgency = 'ISRO';
+        let activeFilter = 'All';
+
+        const agencySelect = document.getElementById('agency-select');
+        const mainTitle = document.getElementById('main-title');
+        const filterContainer = document.getElementById('filter-container');
+        const missionGrid = document.getElementById('mission-grid');
+
+        function renderMissions() {
+            missionGrid.innerHTML = '';
+            const missionsToRender = missionData[currentAgency]
+                .filter(mission => activeFilter === 'All' || mission.type === activeFilter);
+
+            if (missionsToRender.length === 0) {
+                missionGrid.innerHTML = `<p class="text-muted-white">No missions found for this filter.</p>`;
+                return;
+            }
+
+            missionsToRender.forEach(mission => {
+                const card = document.createElement('div');
+                // Only your custom class is kept
+                card.className = "bg-rocket-white position-relative d-inline-block cal-lg-4 cal-sm-6 cal-12";
+                card.innerHTML = `
+                    <div>
+                        <img class="w-100" src="${mission.image}" alt="${mission.name}">
+                        <span class="${mission.statusColor} ${mission.status === 'Upcoming' ? 'text-deep-space-blue position-fixed' : 'text-rocket-white'}">${mission.status}</span>
+                    </div>
+                    <div class="m-2">
+                        <h3 class="text-deep-space-blue text-center">${mission.name}</h3>
+                        <p class="text-black">${mission.description}</p>
+                        <div class="text-black">
+                            <p>🚀 <strong>Launch:</strong> ${mission.launchDate}</p>
+                            <p>🛰️ <strong>Vehicle:</strong> ${mission.vehicle}</p>
+                            <p>🌍 <strong>Orbit:</strong> ${mission.orbit}</p>
+                        </div>
+                        <div class="d-flex ">
+                            <button class="facts-button bg-saffron-thruster-20 text-saffron-thruster rounded-2 w-100 m-1"
+                                    data-mission-name="${mission.name}"
+                                    data-mission-vehicle="${mission.vehicle}"
+                                    data-mission-orbit="${mission.orbit}"
+                                    data-agency-name="${currentAgency}">
+                                ✨ Fun Facts
+                            </button>
+                        </div>
+                    </div>
+                `;
+                missionGrid.appendChild(card);
+            });
+            addFactButtonListeners();
+        }
+
+        function renderFilterButtons() {
+            filterContainer.innerHTML = '';
+            const missionTypes = ['All', ...new Set(missionData[currentAgency].map(m => m.type))];
+
+            missionTypes.forEach(type => {
+                const button = document.createElement('button');
+                button.textContent = type;
+                button.dataset.filter = type;
+                // 'filter-btn' is kept as a JS hook, and your conditional classes are applied
+                button.className = `filter-btn ${activeFilter === type ? 'filter-btn-active' : 'text-muted-white'}`;
+                filterContainer.appendChild(button);
+            });
+            addFilterButtonListeners();
+        }
+
+        function handleAgencyChange(e) {
+            currentAgency = e.target.value;
+            mainTitle.textContent = `${currentAgency} Missions`;
+            activeFilter = 'All';
+            renderFilterButtons();
+            renderMissions();
+        }
+
+        function handleFilterClick(e) {
+            const button = e.target.closest('.filter-btn');
+            if (!button) return;
+            activeFilter = button.dataset.filter;
+
+            // Re-render buttons to update the active class
+            renderFilterButtons();
+            renderMissions();
+        }
+
+        function addFilterButtonListeners() {
+            filterContainer.addEventListener('click', handleFilterClick);
+        }
+
+        function addFactButtonListeners() {
+            document.querySelectorAll('.facts-button').forEach(button => {
+                button.addEventListener('click', handleFactButtonClick);
+            });
+        }
+
+        agencySelect.addEventListener('change', handleAgencyChange);
+
+        function init() {
+            renderFilterButtons();
+            renderMissions();
+        }
+
+        init();
+
+        // This section is simplified to just show/hide the modal as many classes were for Tailwind
+        const modal = document.getElementById('facts-page');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalLoader = document.getElementById('modal-loader');
+        const modalResponseContent = document.getElementById('modal-response-content');
+        const modalFooter = document.getElementById('modal-footer');
+        const explainTechButton = document.getElementById('explain-tech-button');
+
+        const openModal = () => { modal.style.display = 'block'; };
+        const closeModal = () => { modal.style.display = 'none'; };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        async function callGemini(prompt, maxRetries = 3) {
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const result = await response.json();
+                    if (result.candidates && result.candidates[0]?.content?.parts?.[0]) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("Invalid response structure from Gemini API");
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === maxRetries - 1) return "Sorry, I couldn't fetch the information. Please try again later.";
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+
+        async function handleFactButtonClick(e) {
+            const { missionName, missionVehicle, missionOrbit, agencyName } = e.target.dataset;
+            modalTitle.textContent = `Facts about ${missionName}`;
+            modalLoader.style.display = 'block';
+            modalResponseContent.style.display = 'none';
+            modalResponseContent.innerHTML = '';
+            modalFooter.style.display = 'none';
+            openModal();
+            const prompt = `Generate 3 interesting and little-known fun facts about ${agencyName}'s ${missionName} mission. Present them as a numbered list with bold headings for each fact.`;
+            const responseText = await callGemini(prompt);
+            modalLoader.style.display = 'none';
+            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
+            modalResponseContent.style.display = 'block';
+            explainTechButton.dataset.missionVehicle = missionVehicle;
+            explainTechButton.dataset.missionOrbit = missionOrbit;
+            modalFooter.style.display = 'block';
+        }
+
+        explainTechButton.addEventListener('click', async (e) => {
+            const { missionVehicle, missionOrbit } = e.target.dataset;
+            modalResponseContent.innerHTML = '<div class="spinner"></div>';
+            const prompt = `In simple terms for a beginner, explain what a "${missionVehicle}" launch vehicle is and what a "${missionOrbit} Orbit" means in the context of a space mission. Use simple analogies if possible.`;
+            const responseText = await callGemini(prompt);
+            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
+            modalFooter.style.display = 'none';
+        });
+
+        // Initially hide the modal and loader
+        closeModal();
+        modalLoader.style.display = 'none';
+
+    </script>
+</body>
+
+</html>

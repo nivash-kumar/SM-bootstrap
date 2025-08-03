@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agency Mission Tracker - Prototype</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        /* Basic styling for readability without Tailwind */
+        body {
+            font-family:'Inter' sans-serif;
+            background-color: #01192f;
+            color: #f0f2f5;
+        }
+
+        .bg-deep-space-blue {
+            background-color: #0A192F;
+        }
+
+        .bg-rocket-white {
+            background-color: #F0F2F5;
+        }
+
+        .text-rocket-white {
+            color: #F0F2F5;
+        }
+
+        .text-deep-space-blue {
+            color: #0A192F;
+        }
+
+        .text-muted-white {
+            color: #A8B2D1;
+        }
+
+        .bg-saffron-thruster {
+            background-color: #FF9933;
+        }
+        .bg-saffron-thruster-20 {
+            background-color: #ff993320;
+        }
+
+        .text-saffron-thruster{
+            color: #FF9933;
+        }
+        .hover-text-saffron-thruster:hover {
+            color: #FF9933;
+        }
+
+        .bg-galaxy-green {
+            background-color: #2E8B57;
+        }
+
+        .bg-cosmic-red {
+            background-color: #D93025;
+        }
+
+        .bg-starlight-yellow {
+            background-color: #FBCB0A;
+        }
+
+        /* Custom select styles */
+        .custom-select {
+            background-color: #1E293B;
+            border-color: #334155;
+            color: #F0F2F5;
+        }
+
+        /* Active filter button style */
+        .filter-btn-active {
+            background-color: #FF9933 !important;
+            color: #0A192F !important;
+            border-color: #FF9933 !important;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+
+        /* Simple spinner for loading state */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #FF9933;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* //temprary css */
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header, footer {
+            padding: 1rem;
+            background-color: #e2e8f0;
+        }
+
+        #mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .mission-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 1rem;
+            background: #fff;
+        }
+        
+        .mission-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        button, select {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        
+        .filter-btn-active {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        /* Basic Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        /* temprary end here  */
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div>
+                <img src="assets/logo.png" alt="Logo">
+                <h1>Mission Tracker</h1>
+            </div>
+            <div>
+                <select id="agency-select">
+                    <option value="ISRO">ISRO</option>
+                    <option value="NASA">NASA</option>
+                    <option value="SpaceX">SpaceX</option>
+                </select>
+                <div>
+                    <a href="#">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h2 id="main-title">ISRO Missions</h2>
+
+        <div id="filter-container"></div>
+
+        <div id="mission-grid">
+            </div>
+    </main>
+
+    <footer>
+        <div>
+            <div>
+                <h4>Multi-Agency Mission Tracker</h4>
+                <p>Tracking Humanity's Journey to the Stars.</p>
+            </div>
+            <div>
+                <h5>Important Links</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Follow Me</h5>
+                <div>
+                    <a href="#">
+                        <img class="over-text-saffron-thruster" src="assets/xitem.svg" alt="x.com">
+                    </a>
+                    <a href="#">
+                        <img class="over-text-saffron-thruster" src="assets/youtube.svg" alt="youtube.com">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>© 2024 Mission Tracker. A fan-made project.</div>
+    </footer>
+
+    <div id="facts-page" class="modal-overlay hidden">
+        <div id="modal-content-container" class="modal-content">
+            <div>
+                <h3 id="modal-title">Mission Insights</h3>
+                <button id="modal-close-button">×</button>
+            </div>
+            <div id="modal-body">
+                <div id="modal-loader">
+                    <p>Loading...</p>
+                </div>
+                <div id="modal-response-content" class="hidden"></div>
+            </div>
+            <div id="modal-footer" class="hidden">
+                <button id="explain-tech-button">✨ Explain the Tech</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script>
+        // --- DATA STORE ---
+        const missionData = {
+            "ISRO": [
+                { name: "Chandrayaan-3", type: "Lunar", description: "India's third lunar exploration mission.", launchDate: "14 July 2023", vehicle: "LVM3 M4", orbit: "Lunar", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Chandrayaan-3" },
+                { name: "Mangalyaan (MOM)", type: "Planetary", description: "India's first interplanetary mission to Mars.", launchDate: "5 November 2013", vehicle: "PSLV-XL C25", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Mangalyaan" },
+                { name: "Aditya-L1", type: "Solar", description: "India's first solar observatory mission.", launchDate: "2 September 2023", vehicle: "PSLV-XL", orbit: "Halo (L1)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Aditya-L1" },
+                { name: "Gaganyaan", type: "Human Spaceflight", description: "India's first human spaceflight mission.", launchDate: "Est. 2025", vehicle: "LVM3", orbit: "Low Earth", status: "Upcoming", statusColor: "yellow", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Gaganyaan" }
+            ],
+            "NASA": [
+                { name: "Artemis I", type: "Lunar", description: "Uncrewed test flight of the SLS rocket and Orion spacecraft.", launchDate: "16 November 2022", vehicle: "Space Launch System", orbit: "Lunar", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Artemis+I" },
+                { name: "James Webb Telescope", type: "Observatory", description: "Large infrared space telescope.", launchDate: "25 December 2021", vehicle: "Ariane 5", orbit: "Halo (L2)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=JWST" },
+                { name: "Perseverance Rover", type: "Planetary", description: "Mars rover exploring Jezero crater.", launchDate: "30 July 2020", vehicle: "Atlas V 541", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Perseverance" }
+            ],
+            "SpaceX": [
+                { name: "Starlink Group 6-2", type: "Satellite", description: "Part of the Starlink satellite internet constellation.", launchDate: "27 September 2023", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starlink" },
+                { name: "Inspiration4", type: "Human Spaceflight", description: "First all-civilian orbital spaceflight.", launchDate: "16 September 2021", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Inspiration4" },
+                { name: "Starship Flight Test", type: "Test Flight", description: "Second integrated flight test of Starship.", launchDate: "18 November 2023", vehicle: "Starship", orbit: "Suborbital", status: "Partial Failure", statusColor: "red", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starship" }
+            ]
+        };
+
+        let currentAgency = 'ISRO';
+        let activeFilter = 'All';
+
+        const agencySelect = document.getElementById('agency-select');
+        const mainTitle = document.getElementById('main-title');
+        const filterContainer = document.getElementById('filter-container');
+        const missionGrid = document.getElementById('mission-grid');
+
+        function renderMissions() {
+            missionGrid.innerHTML = '';
+            const missionsToRender = missionData[currentAgency]
+                .filter(mission => activeFilter === 'All' || mission.type === activeFilter);
+
+            if (missionsToRender.length === 0) {
+                missionGrid.innerHTML = `<p>No missions found for this filter.</p>`;
+                return;
+            }
+
+            missionsToRender.forEach(mission => {
+                const card = document.createElement('div');
+                card.className = "mission-card"; // Added a simple class for basic styling
+                card.innerHTML = `
+                    <div>
+                        <img src="${mission.image}" alt="${mission.name}">
+                        <span style="background-color:${mission.statusColor}; color: ${mission.statusColor === 'yellow' ? 'black' : 'white'}; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">${mission.status}</span>
+                    </div>
+                    <div>
+                        <h3>${mission.name}</h3>
+                        <p>${mission.description}</p>
+                        <div>
+                            <p><strong>Launch:</strong> ${mission.launchDate}</p>
+                            <p><strong>Vehicle:</strong> ${mission.vehicle}</p>
+                            <p><strong>Orbit:</strong> ${mission.orbit}</p>
+                        </div>
+                        <div>
+                             <button class="facts-button"
+                                     data-mission-name="${mission.name}"
+                                     data-mission-vehicle="${mission.vehicle}"
+                                     data-mission-orbit="${mission.orbit}"
+                                     data-agency-name="${currentAgency}">
+                                 ✨ Fun Facts
+                             </button>
+                        </div>
+                    </div>
+                `;
+                missionGrid.appendChild(card);
+            });
+            addFactButtonListeners();
+        }
+
+        function renderFilterButtons() {
+            filterContainer.innerHTML = '';
+            const missionTypes = ['All', ...new Set(missionData[currentAgency].map(m => m.type))];
+
+            missionTypes.forEach(type => {
+                const button = document.createElement('button');
+                button.textContent = type;
+                button.dataset.filter = type;
+                if (activeFilter === type) {
+                    button.classList.add('filter-btn-active');
+                }
+                filterContainer.appendChild(button);
+            });
+            addFilterButtonListeners();
+        }
+
+        function handleAgencyChange(e) {
+            currentAgency = e.target.value;
+            mainTitle.textContent = `${currentAgency} Missions`;
+            activeFilter = 'All';
+            renderFilterButtons();
+            renderMissions();
+        }
+
+        function handleFilterClick(e) {
+            const button = e.target.closest('button');
+            if (!button || !button.dataset.filter) return;
+
+            activeFilter = button.dataset.filter;
+
+            document.querySelectorAll('#filter-container button').forEach(btn => {
+                btn.classList.remove('filter-btn-active');
+            });
+            button.classList.add('filter-btn-active');
+            renderMissions();
+        }
+
+        function addFilterButtonListeners() {
+            filterContainer.addEventListener('click', handleFilterClick);
+        }
+
+        function addFactButtonListeners() {
+            document.querySelectorAll('.facts-button').forEach(button => {
+                button.addEventListener('click', handleFactButtonClick);
+            });
+        }
+
+        agencySelect.addEventListener('change', handleAgencyChange);
+
+        function init() {
+            renderFilterButtons();
+            renderMissions();
+        }
+
+        init();
+
+        // --- MODAL & API LOGIC ---
+        const modal = document.getElementById('facts-page');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalLoader = document.getElementById('modal-loader');
+        const modalResponseContent = document.getElementById('modal-response-content');
+        const modalFooter = document.getElementById('modal-footer');
+        const explainTechButton = document.getElementById('explain-tech-button');
+
+        const openModal = () => { modal.classList.remove('hidden'); };
+        const closeModal = () => { modal.classList.add('hidden'); };
+        
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { 
+            // Close if clicking on the overlay, not the content
+            if (e.target === modal) closeModal(); 
+        });
+
+        async function callGemini(prompt, maxRetries = 3) {
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const result = await response.json();
+                    if (result.candidates && result.candidates[0]?.content?.parts?.[0]) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("Invalid response structure from Gemini API");
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === maxRetries - 1) return "Sorry, I couldn't fetch the information. Please try again later.";
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+
+        async function handleFactButtonClick(e) {
+            const { missionName, missionVehicle, missionOrbit, agencyName } = e.target.dataset;
+            modalTitle.textContent = `Facts about ${missionName}`;
+            modalLoader.classList.remove('hidden');
+            modalResponseContent.classList.add('hidden');
+            modalResponseContent.innerHTML = '';
+            modalFooter.classList.add('hidden');
+            openModal();
+
+            const prompt = `Generate 3 interesting and little-known fun facts about ${agencyName}'s ${missionName} mission. Present them as a numbered list with bold headings for each fact.`;
+            const responseText = await callGemini(prompt);
+            
+            modalLoader.classList.add('hidden');
+            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
+            modalResponseContent.classList.remove('hidden');
+            
+            explainTechButton.dataset.missionVehicle = missionVehicle;
+            explainTechButton.dataset.missionOrbit = missionOrbit;
+            modalFooter.classList.remove('hidden');
+        }
+
+        explainTechButton.addEventListener('click', async (e) => {
+            const { missionVehicle, missionOrbit } = e.target.dataset;
+            modalResponseContent.innerHTML = '<p>Loading explanation...</p>';
+            
+            const prompt = `In simple terms for a beginner, explain what a "${missionVehicle}" launch vehicle is and what a "${missionOrbit} Orbit" means in the context of a space mission. Use simple analogies if possible.`;
+            const responseText = await callGemini(prompt);
+            
+            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
+            modalFooter.classList.add('hidden');
+        });
+    </script>
+</body>
+
+</html>
