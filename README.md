@@ -22,12 +22,20 @@ A simple, interactive web application to browse space missions from different ag
 No complex build steps are required to run this project.
 
 ### Prerequisites
-    ```javascript
-    const apiKey = "PASTE_YOUR_API_KEY_HERE"; // Replace with your key
-    ```
-    Replace the placeholder text with your own Google Gemini API key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-4.  **Open in Browser:**
+You will need a modern web browser and a **Google Gemini API Key**.
+
+### Installation
+
+1.  **Clone the repository:**
+    ```sh
+    git clone [https://github.com/your-username/mission-tracker.git](https://github.com/your-username/mission-tracker.git)
+    ```
+2.  **Navigate to the project directory:**
+    ```sh
+    cd mission-tracker
+    ```
+3.  **Open in Browser:**
     Simply open the `index.html` file in your web browser to run the application.
 
 ## 🔧 How It Works
@@ -38,3 +46,7 @@ The application is contained within a single `index.html` file for simplicity.
 * **`renderMissions()`**: This function dynamically creates Bootstrap cards for each mission based on the currently selected agency and filter.
 * **`callGemini()` Function**: When a user clicks "Fun Facts" or "Explain the Tech", a prompt is constructed and sent to the Google Gemini API via this `async` function.
 * **Bootstrap Modal**: The response from the API is then displayed in a Bootstrap modal component, which is controlled entirely by Bootstrap's JavaScript API.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](https://www.google.com/search?q=LICENSE) file for the full text.
