@@ -4,267 +4,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Agency Mission Tracker - Prototype</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>Multi-Agency Mission Tracker - Bootstrap Version</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Basic styling for readability without Tailwind */
+        :root {
+            --deep-space-blue: #0A192F;
+            --rocket-white: #FFFFFF;
+            --muted-white: #adb5bd; /* Bootstrap's gray-500 is a good match */
+            --saffron-thruster: #F59E0B;
+            --galaxy-green: #10B981;
+            --starlight-yellow: #FBBF24;
+            --cosmic-red: #EF4444;
+        }
+
         body {
-            font-family:'Inter' sans-serif;
-            background-color: #01192f;
-            color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space-blue);
+            color: var(--rocket-white);
         }
 
-        .bg-deep-space-blue {
-            background-color: #0A192F;
+        /* --- Header / Nav --- */
+        .header-custom {
+            background-color: rgba(10, 25, 47, 0.8); /* deep-space-blue with opacity */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
         }
 
-        .bg-rocket-white {
-            background-color: #F0F2F5;
+        .custom-select {
+            background-color: var(--deep-space-blue);
+            color: var(--rocket-white);
+            border: 2px solid #4b5563; /* Tailwind gray-600 */
+        }
+        .custom-select:focus {
+            background-color: var(--deep-space-blue);
+            color: var(--rocket-white);
+            border-color: var(--saffron-thruster);
+            box-shadow: 0 0 0 0.25rem rgba(245, 158, 11, 0.25);
         }
 
-        .text-rocket-white {
-            color: #F0F2F5;
-        }
-
-        .text-deep-space-blue {
-            color: #0A192F;
-        }
-
-        .text-muted-white {
-            color: #A8B2D1;
-        }
-
-        .bg-saffron-thruster {
-            background-color: #FF9933;
-        }
-        .bg-saffron-thruster-20 {
-            background-color: #ff993320;
-        }
-
-        .text-saffron-thruster{
-            color: #FF9933;
+        .hover-text-saffron-thruster {
+            color: var(--rocket-white);
+            text-decoration: none;
+            transition: color 0.3s;
         }
         .hover-text-saffron-thruster:hover {
-            color: #FF9933;
+            color: var(--saffron-thruster);
         }
 
-        .bg-galaxy-green {
-            background-color: #2E8B57;
+        /* --- Filter Buttons --- */
+        .filter-btn {
+            color: var(--muted-white);
+            border-color: #4b5563; /* Tailwind gray-600 */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .filter-btn:hover {
+            background-color: #374151; /* Tailwind gray-700 */
+            color: var(--rocket-white);
+            border-color: #4b5563;
+        }
+        .filter-btn.active {
+             background-color: #4b5563;
+             color: var(--rocket-white);
+             border-color: #4b5563;
         }
 
-        .bg-cosmic-red {
-            background-color: #D93025;
+        /* --- Mission Cards --- */
+        .card {
+            border: none;
+            transition: transform 0.3s ease-in-out;
         }
+        .card:hover {
+            transform: translateY(-8px);
+        }
+        .card-img-custom {
+            height: 192px; /* 12rem, same as h-48 */
+            object-fit: cover;
+        }
+        .card-body .card-title { color: var(--deep-space-blue); }
+        .card-body .card-text, .card-body .mission-detail { color: #495057; } /* Bootstrap's gray-700 */
 
-        .bg-starlight-yellow {
-            background-color: #FBCB0A;
-        }
-
-        /* Custom select styles */
-        .custom-select {
-            background-color: #1E293B;
-            border-color: #334155;
-            color: #F0F2F5;
-        }
-
-        /* Active filter button style */
-        .filter-btn-active {
-            background-color: #FF9933 !important;
-            color: #0A192F !important;
-            border-color: #FF9933 !important;
-        }
-
-        /* Modal styles */
-        .modal-overlay {
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-content {
-            transition: transform 0.3s ease;
-        }
-
-        /* Simple spinner for loading state */
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #FF9933;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* //temprary css */
-        main {
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        header, footer {
-            padding: 1rem;
-            background-color: #e2e8f0;
-        }
-
-        #mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+        .btn-outline-saffron {
+            --bs-btn-color: var(--saffron-thruster);
+            --bs-btn-border-color: var(--saffron-thruster);
+            --bs-btn-hover-color: var(--rocket-white);
+            --bs-btn-hover-bg: var(--saffron-thruster);
+            --bs-btn-hover-border-color: var(--saffron-thruster);
+            --bs-btn-active-color: var(--rocket-white);
+            --bs-btn-active-bg: var(--saffron-thruster);
+            --bs-btn-active-border-color: var(--saffron-thruster);
         }
         
-        .mission-card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 1rem;
-            background: #fff;
+        /* --- Footer --- */
+        .footer-custom {
+             border-top: 1px solid rgba(17, 24, 39, 0.5); /* Emulating border-blue-900/50 */
         }
+        .footer-custom a {
+            color: var(--muted-white);
+            text-decoration: none;
+        }
+        .footer-custom a:hover {
+            color: var(--saffron-thruster);
+        }
+
+        /* --- Modal --- */
+        .modal-content-custom {
+            background-color: var(--deep-space-blue);
+            border: 1px solid #1e293b; /* Tailwind blue-800 */
+        }
+        .modal-header { border-bottom: 1px solid #1e293b; }
+        .modal-footer { border-top: 1px solid #1e293b; }
+        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
+        .prose { line-height: 1.6; }
+        .prose strong { color: var(--rocket-white); }
         
-        .mission-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-        
-        button, select {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-        
-        .filter-btn-active {
-            background-color: #007bff;
-            color: white;
-        }
-        
-        /* Basic Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        /* temprary end here  */
+        /* Spinner for Modal */
+        .spinner-border-light { color: var(--rocket-white); }
+
     </style>
-    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="bg-deep-space-blue">
 
-    <header>
-        <nav>
-            <div>
-                <img src="assets/logo.png" alt="Logo">
-                <h1>Mission Tracker</h1>
+    <header class="header-custom sticky-top shadow-lg">
+        <nav class="container d-flex justify-content-between align-items-center py-3">
+            <div class="d-flex align-items-center gap-3">
+                <img class="h-10 w-10" src="../../assets/logo.png" alt="" style="height: 40px; width: 40px;">
+                <h1 class="fs-5 fw-bold text-white d-none d-sm-block mb-0">Mission Tracker</h1>
             </div>
-            <div>
-                <select id="agency-select">
+            <div class="d-flex align-items-center gap-3">
+                <select id="agency-select" class="form-select custom-select">
                     <option value="ISRO">ISRO</option>
                     <option value="NASA">NASA</option>
                     <option value="SpaceX">SpaceX</option>
                 </select>
-                <div>
-                    <a href="#">About</a>
+                <div class="d-none d-md-flex align-items-center gap-4">
+                    <a href="#" class="fw-semibold hover-text-saffron-thruster">About</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <h2 id="main-title">ISRO Missions</h2>
+    <main class="container px-4 py-5">
+        <h2 id="main-title" class="display-3 fw-bold text-center mb-5 text-white">ISRO Missions</h2>
 
-        <div id="filter-container"></div>
+        <div id="filter-container" class="d-flex flex-wrap justify-content-center gap-2 gap-md-3 mb-5"></div>
 
-        <div id="mission-grid">
+        <div id="mission-grid" class="row g-4">
             </div>
     </main>
 
-    <footer>
-        <div>
-            <div>
-                <h4>Multi-Agency Mission Tracker</h4>
-                <p>Tracking Humanity's Journey to the Stars.</p>
-            </div>
-            <div>
-                <h5>Important Links</h5>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Follow Me</h5>
-                <div>
-                    <a href="#">
-                        <img class="over-text-saffron-thruster" src="assets/xitem.svg" alt="x.com">
-                    </a>
-                    <a href="#">
-                        <img class="over-text-saffron-thruster" src="assets/youtube.svg" alt="youtube.com">
-                    </a>
+    <footer class="footer-custom mt-5">
+        <div class="container px-4 py-5">
+            <div class="row g-5 text-center text-md-start">
+                <div class="col-md-4">
+                    <h4 class="fs-5 fw-bold text-white mb-2">Multi-Agency Mission Tracker</h4>
+                    <p class="text-muted">Tracking Humanity's Journey to the Stars.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-4">Important Links</h5>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-4">Follow Me</h5>
+                    <div class="d-flex justify-content-center justify-content-md-start gap-4">
+                        <a href="#"><img src="../../assets/xitem.svg" alt="x.com" style="height: 24px; width: 24px;"></a>
+                        <a href="#"><img src="../../assets/youtube.svg" alt="youtube.com" style="height: 24px; width: 24px;"></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>© 2024 Mission Tracker. A fan-made project.</div>
+        <div class="text-center py-4 text-muted small footer-custom">
+            © 2024 Mission Tracker. A fan-made project.
+        </div>
     </footer>
 
-    <div id="facts-page" class="modal-overlay hidden">
-        <div id="modal-content-container" class="modal-content">
-            <div>
-                <h3 id="modal-title">Mission Insights</h3>
-                <button id="modal-close-button">×</button>
-            </div>
-            <div id="modal-body">
-                <div id="modal-loader">
-                    <p>Loading...</p>
+    <div class="modal fade" id="facts-page" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-white" id="modal-title">Mission Insights</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="modal-response-content" class="hidden"></div>
-            </div>
-            <div id="modal-footer" class="hidden">
-                <button id="explain-tech-button">✨ Explain the Tech</button>
+                <div id="modal-body" class="modal-body text-muted prose">
+                    <div id="modal-loader" class="d-flex justify-content-center align-items-center" style="height: 12rem;">
+                         <div class="spinner-border spinner-border-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="modal-response-content" class="d-none"></div>
+                </div>
+                <div id="modal-footer" class="modal-footer d-none">
+                     <button id="explain-tech-button" class="btn btn-outline-saffron">✨ Explain the Tech</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0rPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
     <script>
         // --- DATA STORE ---
         const missionData = {
             "ISRO": [
-                { name: "Chandrayaan-3", type: "Lunar", description: "India's third lunar exploration mission.", launchDate: "14 July 2023", vehicle: "LVM3 M4", orbit: "Lunar", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Chandrayaan-3" },
-                { name: "Mangalyaan (MOM)", type: "Planetary", description: "India's first interplanetary mission to Mars.", launchDate: "5 November 2013", vehicle: "PSLV-XL C25", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Mangalyaan" },
-                { name: "Aditya-L1", type: "Solar", description: "India's first solar observatory mission.", launchDate: "2 September 2023", vehicle: "PSLV-XL", orbit: "Halo (L1)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Aditya-L1" },
-                { name: "Gaganyaan", type: "Human Spaceflight", description: "India's first human spaceflight mission.", launchDate: "Est. 2025", vehicle: "LVM3", orbit: "Low Earth", status: "Upcoming", statusColor: "yellow", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Gaganyaan" }
+                { name: "Chandrayaan-3", type: "Lunar", description: "India's third lunar exploration mission.", launchDate: "14 July 2023", vehicle: "LVM3 M4", orbit: "Lunar", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Chandrayaan-3" },
+                { name: "Mangalyaan (MOM)", type: "Planetary", description: "India's first interplanetary mission to Mars.", launchDate: "5 November 2013", vehicle: "PSLV-XL C25", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Mangalyaan" },
+                { name: "Aditya-L1", type: "Solar", description: "India's first solar observatory mission.", launchDate: "2 September 2023", vehicle: "PSLV-XL", orbit: "Halo (L1)", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Aditya-L1" },
+                { name: "Gaganyaan", type: "Human Spaceflight", description: "India's first human spaceflight mission.", launchDate: "Est. 2025", vehicle: "LVM3", orbit: "Low Earth", status: "Upcoming", statusColor: "bg-warning", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Gaganyaan" }
             ],
             "NASA": [
-                { name: "Artemis I", type: "Lunar", description: "Uncrewed test flight of the SLS rocket and Orion spacecraft.", launchDate: "16 November 2022", vehicle: "Space Launch System", orbit: "Lunar", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Artemis+I" },
-                { name: "James Webb Telescope", type: "Observatory", description: "Large infrared space telescope.", launchDate: "25 December 2021", vehicle: "Ariane 5", orbit: "Halo (L2)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=JWST" },
-                { name: "Perseverance Rover", type: "Planetary", description: "Mars rover exploring Jezero crater.", launchDate: "30 July 2020", vehicle: "Atlas V 541", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Perseverance" }
+                { name: "Artemis I", type: "Lunar", description: "Uncrewed test flight of the SLS rocket and Orion spacecraft.", launchDate: "16 November 2022", vehicle: "Space Launch System", orbit: "Lunar", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Artemis+I" },
+                { name: "James Webb Telescope", type: "Observatory", description: "Large infrared space telescope.", launchDate: "25 December 2021", vehicle: "Ariane 5", orbit: "Halo (L2)", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=JWST" },
+                { name: "Perseverance Rover", type: "Planetary", description: "Mars rover exploring Jezero crater.", launchDate: "30 July 2020", vehicle: "Atlas V 541", orbit: "Areocentric (Mars)", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/1E40AF/FFFFFF?text=Perseverance" }
             ],
             "SpaceX": [
-                { name: "Starlink Group 6-2", type: "Satellite", description: "Part of the Starlink satellite internet constellation.", launchDate: "27 September 2023", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starlink" },
-                { name: "Inspiration4", type: "Human Spaceflight", description: "First all-civilian orbital spaceflight.", launchDate: "16 September 2021", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "green", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Inspiration4" },
-                { name: "Starship Flight Test", type: "Test Flight", description: "Second integrated flight test of Starship.", launchDate: "18 November 2023", vehicle: "Starship", orbit: "Suborbital", status: "Partial Failure", statusColor: "red", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starship" }
+                { name: "Starlink Group 6-2", type: "Satellite", description: "Part of the Starlink satellite internet constellation.", launchDate: "27 September 2023", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starlink" },
+                { name: "Inspiration4", type: "Human Spaceflight", description: "First all-civilian orbital spaceflight.", launchDate: "16 September 2021", vehicle: "Falcon 9 Block 5", orbit: "Low Earth", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Inspiration4" },
+                { name: "Starship Flight Test", type: "Test Flight", description: "Second integrated flight test of Starship.", launchDate: "18 November 2023", vehicle: "Starship", orbit: "Suborbital", status: "Partial Failure", statusColor: "bg-danger", image: "https://placehold.co/600x400/1F2937/FFFFFF?text=Starship" }
             ]
         };
 
@@ -282,38 +252,44 @@
                 .filter(mission => activeFilter === 'All' || mission.type === activeFilter);
 
             if (missionsToRender.length === 0) {
-                missionGrid.innerHTML = `<p>No missions found for this filter.</p>`;
+                missionGrid.innerHTML = `<p class="text-center text-muted col-12">No missions found for this filter.</p>`;
                 return;
             }
 
             missionsToRender.forEach(mission => {
-                const card = document.createElement('div');
-                card.className = "mission-card"; // Added a simple class for basic styling
-                card.innerHTML = `
-                    <div>
-                        <img src="${mission.image}" alt="${mission.name}">
-                        <span style="background-color:${mission.statusColor}; color: ${mission.statusColor === 'yellow' ? 'black' : 'white'}; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">${mission.status}</span>
-                    </div>
-                    <div>
-                        <h3>${mission.name}</h3>
-                        <p>${mission.description}</p>
-                        <div>
-                            <p><strong>Launch:</strong> ${mission.launchDate}</p>
-                            <p><strong>Vehicle:</strong> ${mission.vehicle}</p>
-                            <p><strong>Orbit:</strong> ${mission.orbit}</p>
+                const col = document.createElement('div');
+                col.className = "col-12 col-md-6 col-lg-4";
+                
+                // Use bg-dark for the text color on the warning badge
+                const statusTextColor = mission.status === 'Upcoming' ? 'text-dark' : 'text-white';
+
+                col.innerHTML = `
+                    <div class="card h-100 shadow-lg">
+                        <div class="position-relative">
+                            <img src="${mission.image}" alt="${mission.name}" class="card-img-top card-img-custom">
+                            <span class="badge ${mission.statusColor} ${statusTextColor} rounded-pill position-absolute top-0 end-0 m-3 fs-6">${mission.status}</span>
                         </div>
-                        <div>
-                             <button class="facts-button"
-                                     data-mission-name="${mission.name}"
-                                     data-mission-vehicle="${mission.vehicle}"
-                                     data-mission-orbit="${mission.orbit}"
-                                     data-agency-name="${currentAgency}">
-                                 ✨ Fun Facts
-                             </button>
+                        <div class="card-body d-flex flex-column p-4">
+                            <h3 class="card-title h4 fw-bold mb-2">${mission.name}</h3>
+                            <p class="card-text mb-4">${mission.description}</p>
+                            <div class="mb-4 mission-detail">
+                                <p class="mb-1">🚀 <strong>Launch:</strong> ${mission.launchDate}</p>
+                                <p class="mb-1">🛰️ <strong>Vehicle:</strong> ${mission.vehicle}</p>
+                                <p class="mb-1">🌍 <strong>Orbit:</strong> ${mission.orbit}</p>
+                            </div>
+                            <div class="mt-auto">
+                               <button class="btn btn-outline-saffron w-100 fw-bold facts-button"
+                                    data-mission-name="${mission.name}"
+                                    data-mission-vehicle="${mission.vehicle}"
+                                    data-mission-orbit="${mission.orbit}"
+                                    data-agency-name="${currentAgency}">
+                                    ✨ Fun Facts
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
-                missionGrid.appendChild(card);
+                missionGrid.appendChild(col);
             });
             addFactButtonListeners();
         }
@@ -326,78 +302,75 @@
                 const button = document.createElement('button');
                 button.textContent = type;
                 button.dataset.filter = type;
-                if (activeFilter === type) {
-                    button.classList.add('filter-btn-active');
-                }
+                button.className = `btn filter-btn rounded-pill px-4 ${activeFilter === type ? 'active' : ''}`;
                 filterContainer.appendChild(button);
             });
-            addFilterButtonListeners();
         }
-
+        
         function handleAgencyChange(e) {
             currentAgency = e.target.value;
             mainTitle.textContent = `${currentAgency} Missions`;
             activeFilter = 'All';
             renderFilterButtons();
             renderMissions();
+            addFilterButtonListeners(); // Re-add listener after buttons are recreated
         }
 
         function handleFilterClick(e) {
-            const button = e.target.closest('button');
-            if (!button || !button.dataset.filter) return;
+            const button = e.target.closest('.filter-btn');
+            if (!button) return;
 
             activeFilter = button.dataset.filter;
-
-            document.querySelectorAll('#filter-container button').forEach(btn => {
-                btn.classList.remove('filter-btn-active');
-            });
-            button.classList.add('filter-btn-active');
+            
+            // Update active styles
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
             renderMissions();
         }
-
+        
+        // Use a single delegated event listener on the container
         function addFilterButtonListeners() {
+            // Remove old listener to prevent duplicates if this function is called multiple times
+            filterContainer.removeEventListener('click', handleFilterClick);
             filterContainer.addEventListener('click', handleFilterClick);
         }
 
         function addFactButtonListeners() {
             document.querySelectorAll('.facts-button').forEach(button => {
+                // Remove potential old listener before adding a new one
+                button.removeEventListener('click', handleFactButtonClick);
                 button.addEventListener('click', handleFactButtonClick);
             });
         }
-
+        
         agencySelect.addEventListener('change', handleAgencyChange);
 
+        // --- INITIALIZATION ---
         function init() {
             renderFilterButtons();
             renderMissions();
+            addFilterButtonListeners();
         }
 
         init();
 
         // --- MODAL & API LOGIC ---
-        const modal = document.getElementById('facts-page');
+        const factsModalElement = document.getElementById('facts-page');
+        const factsModal = new bootstrap.Modal(factsModalElement);
+        
         const modalTitle = document.getElementById('modal-title');
-        const modalCloseButton = document.getElementById('modal-close-button');
         const modalLoader = document.getElementById('modal-loader');
         const modalResponseContent = document.getElementById('modal-response-content');
         const modalFooter = document.getElementById('modal-footer');
         const explainTechButton = document.getElementById('explain-tech-button');
 
-        const openModal = () => { modal.classList.remove('hidden'); };
-        const closeModal = () => { modal.classList.add('hidden'); };
-        
-        modalCloseButton.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => { 
-            // Close if clicking on the overlay, not the content
-            if (e.target === modal) closeModal(); 
-        });
-
         async function callGemini(prompt, maxRetries = 3) {
+            // This function remains the same as it handles the API call, not the UI
             let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
             const payload = { contents: chatHistory };
-            const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API key
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-            
+            const apiKey = "AIzaSyCq1xy_IjQ0SEW9xa5cz2kti44n4uFuxoA"; // Replace with your key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
             for (let i = 0; i < maxRetries; i++) {
                 try {
                     const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -415,37 +388,43 @@
                 }
             }
         }
-
+        
         async function handleFactButtonClick(e) {
             const { missionName, missionVehicle, missionOrbit, agencyName } = e.target.dataset;
+            
+            // Reset modal state
             modalTitle.textContent = `Facts about ${missionName}`;
-            modalLoader.classList.remove('hidden');
-            modalResponseContent.classList.add('hidden');
+            modalLoader.classList.remove('d-none');
+            modalResponseContent.classList.add('d-none');
             modalResponseContent.innerHTML = '';
-            modalFooter.classList.add('hidden');
-            openModal();
+            modalFooter.classList.add('d-none');
+            
+            factsModal.show();
 
-            const prompt = `Generate 3 interesting and little-known fun facts about ${agencyName}'s ${missionName} mission. Present them as a numbered list with bold headings for each fact.`;
+            const prompt = `Generate 3 interesting and little-known fun facts about ${agencyName}'s ${missionName} mission. Format the response as simple HTML using a numbered list (<ol>, <li>) and <strong> for headings. Do not include markdown.`;
             const responseText = await callGemini(prompt);
             
-            modalLoader.classList.add('hidden');
-            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
-            modalResponseContent.classList.remove('hidden');
+            // Update modal with response
+            modalLoader.classList.add('d-none');
+            modalResponseContent.innerHTML = responseText;
+            modalResponseContent.classList.remove('d-none');
             
             explainTechButton.dataset.missionVehicle = missionVehicle;
             explainTechButton.dataset.missionOrbit = missionOrbit;
-            modalFooter.classList.remove('hidden');
+            modalFooter.classList.remove('d-none');
         }
 
         explainTechButton.addEventListener('click', async (e) => {
             const { missionVehicle, missionOrbit } = e.target.dataset;
-            modalResponseContent.innerHTML = '<p>Loading explanation...</p>';
-            
-            const prompt = `In simple terms for a beginner, explain what a "${missionVehicle}" launch vehicle is and what a "${missionOrbit} Orbit" means in the context of a space mission. Use simple analogies if possible.`;
+
+            // Show loader in the response area
+            modalResponseContent.innerHTML = `<div class="d-flex justify-content-center align-items-center" style="height: 12rem;"><div class="spinner-border spinner-border-light" role="status"><span class="visually-hidden">Loading...</span></div></div>`;
+            modalFooter.classList.add('d-none'); // Hide footer while loading new content
+
+            const prompt = `In simple terms for a beginner, explain what a "${missionVehicle}" launch vehicle is and what a "${missionOrbit} Orbit" means in the context of a space mission. Use simple analogies if possible. Format the response as simple HTML with <p> and <strong> tags. Do not include markdown.`;
             const responseText = await callGemini(prompt);
             
-            modalResponseContent.innerHTML = responseText.replace(/\n/g, '<br>');
-            modalFooter.classList.add('hidden');
+            modalResponseContent.innerHTML = responseText;
         });
     </script>
 </body>
