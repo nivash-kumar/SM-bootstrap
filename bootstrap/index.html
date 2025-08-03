@@ -11,125 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --deep-space-blue: #0A192F;
-            --rocket-white: #FFFFFF;
-            --muted-white: #adb5bd; /* Bootstrap's gray-500 is a good match */
-            --saffron-thruster: #F59E0B;
-            --galaxy-green: #10B981;
-            --starlight-yellow: #FBBF24;
-            --cosmic-red: #EF4444;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--deep-space-blue);
-            color: var(--rocket-white);
-        }
-
-        /* --- Header / Nav --- */
-        .header-custom {
-            background-color: rgba(10, 25, 47, 0.8); /* deep-space-blue with opacity */
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-        }
-
-        .custom-select {
-            background-color: var(--deep-space-blue);
-            color: var(--rocket-white);
-            border: 2px solid #4b5563; /* Tailwind gray-600 */
-        }
-        .custom-select:focus {
-            background-color: var(--deep-space-blue);
-            color: var(--rocket-white);
-            border-color: var(--saffron-thruster);
-            box-shadow: 0 0 0 0.25rem rgba(245, 158, 11, 0.25);
-        }
-
-        .hover-text-saffron-thruster {
-            color: var(--rocket-white);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .hover-text-saffron-thruster:hover {
-            color: var(--saffron-thruster);
-        }
-
-        /* --- Filter Buttons --- */
-        .filter-btn {
-            color: var(--muted-white);
-            border-color: #4b5563; /* Tailwind gray-600 */
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .filter-btn:hover {
-            background-color: #374151; /* Tailwind gray-700 */
-            color: var(--rocket-white);
-            border-color: #4b5563;
-        }
-        .filter-btn.active {
-             background-color: #4b5563;
-             color: var(--rocket-white);
-             border-color: #4b5563;
-        }
-
-        /* --- Mission Cards --- */
-        .card {
-            border: none;
-            transition: transform 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-        }
-        .card-img-custom {
-            height: 192px; /* 12rem, same as h-48 */
-            object-fit: cover;
-        }
-        .card-body .card-title { color: var(--deep-space-blue); }
-        .card-body .card-text, .card-body .mission-detail { color: #495057; } /* Bootstrap's gray-700 */
-
-        .btn-outline-saffron {
-            --bs-btn-color: var(--saffron-thruster);
-            --bs-btn-border-color: var(--saffron-thruster);
-            --bs-btn-hover-color: var(--rocket-white);
-            --bs-btn-hover-bg: var(--saffron-thruster);
-            --bs-btn-hover-border-color: var(--saffron-thruster);
-            --bs-btn-active-color: var(--rocket-white);
-            --bs-btn-active-bg: var(--saffron-thruster);
-            --bs-btn-active-border-color: var(--saffron-thruster);
-        }
-        
-        /* --- Footer --- */
-        .footer-custom {
-             border-top: 1px solid rgba(17, 24, 39, 0.5); /* Emulating border-blue-900/50 */
-        }
-        .footer-custom a {
-            color: var(--muted-white);
-            text-decoration: none;
-        }
-        .footer-custom a:hover {
-            color: var(--saffron-thruster);
-        }
-
-        /* --- Modal --- */
-        .modal-content-custom {
-            background-color: var(--deep-space-blue);
-            border: 1px solid #1e293b; /* Tailwind blue-800 */
-        }
-        .modal-header { border-bottom: 1px solid #1e293b; }
-        .modal-footer { border-top: 1px solid #1e293b; }
-        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
-
-        .prose { line-height: 1.6; }
-        .prose strong { color: var(--rocket-white); }
-        
-        /* Spinner for Modal */
-        .spinner-border-light { color: var(--rocket-white); }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-deep-space-blue">
@@ -137,7 +19,7 @@
     <header class="header-custom sticky-top shadow-lg">
         <nav class="container d-flex justify-content-between align-items-center py-3">
             <div class="d-flex align-items-center gap-3">
-                <img class="h-10 w-10" src="../../assets/logo.png" alt="" style="height: 40px; width: 40px;">
+                <img class="h-10 w-10" src="../assets/logo.png" alt="" style="height: 40px; width: 40px;">
                 <h1 class="fs-5 fw-bold text-white d-none d-sm-block mb-0">Mission Tracker</h1>
             </div>
             <div class="d-flex align-items-center gap-3">
@@ -159,7 +41,7 @@
         <div id="filter-container" class="d-flex flex-wrap justify-content-center gap-2 gap-md-3 mb-5"></div>
 
         <div id="mission-grid" class="row g-4">
-            </div>
+        </div>
     </main>
 
     <footer class="footer-custom mt-5">
@@ -180,8 +62,8 @@
                 <div class="col-md-4">
                     <h5 class="fw-bold text-white mb-4">Follow Me</h5>
                     <div class="d-flex justify-content-center justify-content-md-start gap-4">
-                        <a href="#"><img src="../../assets/xitem.svg" alt="x.com" style="height: 24px; width: 24px;"></a>
-                        <a href="#"><img src="../../assets/youtube.svg" alt="youtube.com" style="height: 24px; width: 24px;"></a>
+                        <a href="#"><img src="../assets/xitem.svg" alt="x.com" style="height: 24px; width: 24px;"></a>
+                        <a href="#"><img src="../assets/youtube.svg" alt="youtube.com" style="height: 24px; width: 24px;"></a>
                     </div>
                 </div>
             </div>
@@ -213,12 +95,10 @@
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0rPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
     <script>
-        // --- DATA STORE ---
         const missionData = {
             "ISRO": [
                 { name: "Chandrayaan-3", type: "Lunar", description: "India's third lunar exploration mission.", launchDate: "14 July 2023", vehicle: "LVM3 M4", orbit: "Lunar", status: "Successful", statusColor: "bg-success", image: "https://placehold.co/600x400/0A192F/FFFFFF?text=Chandrayaan-3" },
@@ -260,7 +140,6 @@
                 const col = document.createElement('div');
                 col.className = "col-12 col-md-6 col-lg-4";
                 
-                // Use bg-dark for the text color on the warning badge
                 const statusTextColor = mission.status === 'Upcoming' ? 'text-dark' : 'text-white';
 
                 col.innerHTML = `
@@ -313,7 +192,7 @@
             activeFilter = 'All';
             renderFilterButtons();
             renderMissions();
-            addFilterButtonListeners(); // Re-add listener after buttons are recreated
+            addFilterButtonListeners();
         }
 
         function handleFilterClick(e) {
@@ -322,23 +201,19 @@
 
             activeFilter = button.dataset.filter;
             
-            // Update active styles
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
             renderMissions();
         }
         
-        // Use a single delegated event listener on the container
         function addFilterButtonListeners() {
-            // Remove old listener to prevent duplicates if this function is called multiple times
             filterContainer.removeEventListener('click', handleFilterClick);
             filterContainer.addEventListener('click', handleFilterClick);
         }
 
         function addFactButtonListeners() {
             document.querySelectorAll('.facts-button').forEach(button => {
-                // Remove potential old listener before adding a new one
                 button.removeEventListener('click', handleFactButtonClick);
                 button.addEventListener('click', handleFactButtonClick);
             });
@@ -346,7 +221,6 @@
         
         agencySelect.addEventListener('change', handleAgencyChange);
 
-        // --- INITIALIZATION ---
         function init() {
             renderFilterButtons();
             renderMissions();
@@ -355,7 +229,6 @@
 
         init();
 
-        // --- MODAL & API LOGIC ---
         const factsModalElement = document.getElementById('facts-page');
         const factsModal = new bootstrap.Modal(factsModalElement);
         
@@ -366,10 +239,9 @@
         const explainTechButton = document.getElementById('explain-tech-button');
 
         async function callGemini(prompt, maxRetries = 3) {
-            // This function remains the same as it handles the API call, not the UI
             let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
             const payload = { contents: chatHistory };
-            const apiKey = "AIzaSyCq1xy_IjQ0SEW9xa5cz2kti44n4uFuxoA"; // Replace with your key
+            const apiKey = "AIzaSyCq1xy_IjQ0SEW9xa5cz2kti44n4uFuxoA";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
             for (let i = 0; i < maxRetries; i++) {
                 try {
@@ -392,7 +264,6 @@
         async function handleFactButtonClick(e) {
             const { missionName, missionVehicle, missionOrbit, agencyName } = e.target.dataset;
             
-            // Reset modal state
             modalTitle.textContent = `Facts about ${missionName}`;
             modalLoader.classList.remove('d-none');
             modalResponseContent.classList.add('d-none');
@@ -404,7 +275,6 @@
             const prompt = `Generate 3 interesting and little-known fun facts about ${agencyName}'s ${missionName} mission. Format the response as simple HTML using a numbered list (<ol>, <li>) and <strong> for headings. Do not include markdown.`;
             const responseText = await callGemini(prompt);
             
-            // Update modal with response
             modalLoader.classList.add('d-none');
             modalResponseContent.innerHTML = responseText;
             modalResponseContent.classList.remove('d-none');
@@ -417,9 +287,8 @@
         explainTechButton.addEventListener('click', async (e) => {
             const { missionVehicle, missionOrbit } = e.target.dataset;
 
-            // Show loader in the response area
             modalResponseContent.innerHTML = `<div class="d-flex justify-content-center align-items-center" style="height: 12rem;"><div class="spinner-border spinner-border-light" role="status"><span class="visually-hidden">Loading...</span></div></div>`;
-            modalFooter.classList.add('d-none'); // Hide footer while loading new content
+            modalFooter.classList.add('d-none');
 
             const prompt = `In simple terms for a beginner, explain what a "${missionVehicle}" launch vehicle is and what a "${missionOrbit} Orbit" means in the context of a space mission. Use simple analogies if possible. Format the response as simple HTML with <p> and <strong> tags. Do not include markdown.`;
             const responseText = await callGemini(prompt);
