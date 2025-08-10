@@ -34,7 +34,7 @@ You will need a modern web browser and a **Google Gemini API Key**.
 
 1.  **Clone the repository:**
     ```sh
-    git clone [https://github.com/your-username/mission-tracker.git](https://github.com/your-username/mission-tracker.git)
+    git clone [https://github.com/nivash-kumar/SM-bootstrap.git](https://github.com/nivash-kumar/SM-bootstrap.git)
     ```
 2.  **Navigate to the project directory:**
     ```sh
