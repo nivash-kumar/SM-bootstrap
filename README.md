@@ -14,7 +14,7 @@ A simple, interactive web application to browse space missions from different ag
 ## 🔗 Links
 
 * **Live Demo**: [your-hosting-link.com](https://your-hosting-link.com)
-* **Figma Design**: [Figma Project Link]([https://www.figma.com/file/your-figma-project-id](https://www.figma.com/design/kgXwmRcBuahEwEbim8gxJq/mission-tracker-UI?node-id=51-421&t=NopEVVDTs7FhWnDd-1))
+* **Figma Design**: [Figma Project Link](https://www.figma.com/file/your-figma-project-id](https://www.figma.com/design/kgXwmRcBuahEwEbim8gxJq/mission-tracker-UI?node-id=51-421&t=NopEVVDTs7FhWnDd-1)
 
 ## 🛠️ Tech Stack
 
@@ -43,7 +43,7 @@ You will need a modern web browser and a **Google Gemini API Key**.
 3.  **Add your API Key:**
     Open the `index.html` file and find the following line within the `<script>` tag at the bottom:
     ```javascript
-    const apiKey = "AIzaSyCq1xy_IjQ0SEW9xa5cz2kti44n4uFuxoA"; // Replace with your key
+    const apiKey = "AIzaSyCq1xy_IjQ0SEW9xa5cz2kti44n4uFuxoA";
     ```
     Replace the placeholder key with your own Google Gemini API key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
