@@ -13,7 +13,7 @@ A simple, interactive web application to browse space missions from different ag
 
 ## 🔗 Links
 
-* **Live Demo**: [(https://nivash-kumar.github.io/SM-bootstrap/)]([https://your-hosting-link.com](https://nivash-kumar.github.io/SM-bootstrap/])
+* **Live Demo**: [(https://nivash-kumar.github.io/SM-bootstrap/)]([https://nivash-kumar.github.io/SM-bootstrap/])
 * **Figma Design**: [Figma Project Link](https://www.figma.com/file/your-figma-project-id](https://www.figma.com/design/kgXwmRcBuahEwEbim8gxJq/mission-tracker-UI?node-id=51-421&t=NopEVVDTs7FhWnDd-1)
 
 ## 🛠️ Tech Stack
